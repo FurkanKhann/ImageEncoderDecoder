@@ -1,4 +1,4 @@
-<h1 align="center" id="title">ImageDecodeEncoder</h1>
+<h1 align="center" id="title">ImageEncoderDecode</h1>
 
 <p id="description">This Streamlit application allows you to encode and decode messages within images. The encoded images can be used to discreetly convey information and the messages can be retrieved later using this app.</p>
 
