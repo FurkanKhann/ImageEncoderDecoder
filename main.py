@@ -33,15 +33,14 @@ prime_numbers = sieve_of_eratosthenes(2073600)
 
 # Image to 1D array
 def image_to_1d_array(image):
-    img = Image.open(image).convert('L')
+    img = Image.open(image)  # Keep the image in its original mode
     img_array = np.array(img)
     return img_array.flatten()
 
 # Convert 1D array back to image
 def array_to_image(img_1d_array, width, height):
-    img_2d_array = img_1d_array.reshape((height, width))
-    img_rgb_array = np.stack([img_2d_array] * 3, axis=-1)
-    return Image.fromarray(img_rgb_array.astype(np.uint8), mode='RGB')
+    img_2d_array = img_1d_array.reshape((height, width, -1))  # Reshape considering the number of channels
+    return Image.fromarray(img_2d_array.astype(np.uint8))
 
 # Map text to result array
 def map_text_to_result_array(text, prime_set, mapping, result):
