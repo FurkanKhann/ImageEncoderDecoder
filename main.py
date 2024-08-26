@@ -8,12 +8,13 @@ mapping = {
     ' ': 0, 'a': 1, 'b': 7, 'c': 13, 'd': 19, 'e': 25, 'f': 31, 'g': 37, 'h': 43,
     'i': 49, 'j': 55, 'k': 61, 'l': 67, 'm': 73, 'n': 79, 'o': 85, 'p': 91, 'q': 97,
     'r': 103, 's': 109, 't': 115, 'u': 121, 'v': 127, 'w': 133, 'x': 139, 'y': 145, 'z': 151,
-    '!': 313, '.': 317, ',': 331, '?': 337, '-': 347, '_': 349, '@': 353, '#': 359, 
-    '$': 367, '%': 373, '^': 379, '&': 383, '*': 389, '(': 397, ')': 401, 
-    'A': 157, 'B': 163, 'C': 167, 'D': 173, 'E': 179, 'F': 181, 'G': 191, 
-    'H': 193, 'I': 197, 'J': 199, 'K': 211, 'L': 223, 'M': 227, 'N': 229, 
-    'O': 233, 'P': 239, 'Q': 241, 'R': 251, 'S': 257, 'T': 263, 'U': 269, 
-    'V': 271, 'W': 277, 'X': 281, 'Y': 283, 'Z': 293
+    '!': 3, '.': 9, ',': 12, '?': 18, '-': 21, '_': 24, '@': 27, '#': 30, 
+    '$': 33, '%': 36, '^': 39, '&': 42, '*': 45, '(': 48, ')': 51, 
+    'A': 2, 'B': 8, 'C': 14, 'D': 20, 'E': 26, 'F': 32, 'G': 38, 
+    'H': 44, 'I': 50, 'J': 56, 'K': 62, 'L': 68, 'M': 74, 'N': 80, 
+    'O': 86, 'P': 92, 'Q': 98, 'R': 104, 'S': 110, 'T': 116, 'U': 122, 
+    'V': 128, 'W': 134, 'X': 140, 'Y': 146, 'Z': 152,
+    '0':5,'1':10,'2':15,'3':30,'4':35,'5':40,'6':60,'7':65,'8':70,'9':75
 }
 
 rmapping = {v: k for k, v in mapping.items()}
@@ -44,26 +45,26 @@ def array_to_image(img_1d_array, width, height):
 
 # Map text to result array
 def map_text_to_result_array(text, prime_set, mapping, result):
+    l=len(text)
     for i, char in enumerate(text):
-        result[prime_set[i]] = mapping.get(char, 0)
-    result[prime_set[i + 1]] = -1  # Mark the end of the message with -1
+        prime_index = prime_set[i]
+        result[prime_index] = mapping.get(char, 0)
+    result[10]=l
     return result
 
-# Encode function
+
 def encode(prime_numbers, rmapping, result):
-    ans = ''
+    decoded_message = ''
     i = 0
-    
-    while i < len(prime_numbers) and prime_numbers[i] < len(result) and result[prime_numbers[i]] != -1:
-        ind = prime_numbers[i]
-        if result[ind] in rmapping:
-            ans += rmapping[result[ind]]
-        else:
-            break
+    l=result[10]
+    while i < l:
+        prime_index = prime_numbers[i]
+        value = result[prime_index]
+        if value in rmapping:
+            decoded_message += rmapping[value]
         i += 1
     
-    return ans
-
+    return decoded_message
 # Streamlit App
 st.title("Image Encoder/Decoder")
 
